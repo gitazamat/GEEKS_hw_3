@@ -1,18 +1,4 @@
-# import sqlite3
-#
-# from database import sql_queries
-#
-#
-# class Database:
-#     def __init__(self):
-#         self.connection = sqlite3.connect("db.sqlite3")
-#         self.cursor = self.connection.cursor()
-#
-#     def sql_create_tables(self):
-#         if self.connection:
-#             print("Database conected successfully")
-#
-#         self.connection.execute(sql_queries.CREATE_USER_TABLE_OUERY)
+
 import sqlite3
 from database import sql_queries
 
@@ -51,6 +37,8 @@ class Database:
             "telegram_id": row[1],
             "count": row[2],
         }
+
+
         return self.cursor.execute(
             sql_queries.SELECT_BAN_USER_QUERY,
             (telegram_id,)

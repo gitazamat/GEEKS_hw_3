@@ -14,6 +14,7 @@ class FormStates(StatesGroup):
     occupation = State()
     married = State()
     photo = State()
+    submit = State()
 
 
 async def fsm_start(call: types.CallbackQuery):
@@ -104,24 +105,35 @@ async def load_married(message: types.Message,
 
 async def load_photo(message: types.Message,
                      state: FSMContext):
-    print(message.photo)
-    path = await message.photo[-1].download(
-        destination_dir=DESTINATION_DIR
-    )
-    async with state.proxy() as data:
-        Database().sql_insert_user_form_command(
-            telegram_id=message.from_user.id,
-            nickname=data["nickname"],
-            bio=data["bio"],
-            age=data["age"],
-            occupation=data["occupation"],
-            married=data["married"],
-            photo=path.name,
-        )
-        await message.reply(text="Registered Successfully")
-        await state.finish()
+   async with state.proxy()as data:
+       data['photo'] = message.photo[0].file_id
+       await message.answer_photo(
+           data['photo'],
+           caption=f'{data["nickname"]}'
+                   f'{data["bio"]}'
+                   f'{data["occupation"]}'
+                   f'{data["married"]}'
 
 
+       )
+
+    # path = await message.photo[-1].download(
+    #     destination_dir=DESTINATION_DIR
+    # )
+    # async with state.proxy() as data:
+    #     Database().sql_insert_user_form_command(
+    #         telegram_id=message.from_user.id,
+    #         nickname=data["nickname"],
+    #         bio=data["bio"],
+    #         age=data["age"],
+    #         occupation=data["occupation"],
+    #         married=data["married"],
+    #         photo=path.name,
+    #     )
+    #     await message.reply(text="Registered Successfully")
+    #     await state.finish()
+# async def submit(message: types.Message,
+#                      state: FSMContext):
 def register_fsm_form_handlers(dp: Dispatcher):
     dp.register_callback_query_handler(fsm_start,
                                        lambda call: call.data == "fsm_start_form")
@@ -137,3 +149,4 @@ def register_fsm_form_handlers(dp: Dispatcher):
                                 content_types=['text'])
     dp.register_message_handler(load_photo, state=FormStates.photo,
                                 content_types=types.ContentTypes.PHOTO)
+

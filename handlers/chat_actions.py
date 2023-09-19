@@ -2,7 +2,6 @@ import datetime
 
 from config import bot, GROUP_ID
 from aiogram import types, Dispatcher
-
 from database.sql_commands import Database
 
 
@@ -10,11 +9,13 @@ async def echo_ban(message: types.Message):
     ban_words = ['fuck', 'bitch', 'damn', "DAMN"]
 
     if message.chat.id == GROUP_ID:
+        print(GROUP_ID)
         for word in ban_words:
             if word in message.text.lower().replace(" ", ''):
                 ban_user = Database().sql_select_ban_user_command(
                     telegram_id=message.from_user.id
                 )
+                print(ban_user)
                 if ban_user[0]['count'] >= 3:
                     await bot.send_message(
                         chat_id=message.from_user.id,
@@ -36,7 +37,7 @@ async def echo_ban(message: types.Message):
                 await bot.send_message(
                     chat_id=message.chat.id,
                     text="Hey dont use curse words or "
-                         "i gonna ban you forever"
+                         "i gonna ban u forever"
                 )
                 # await bot.ban_chat_member(
                 #     chat_id=message.chat.id,

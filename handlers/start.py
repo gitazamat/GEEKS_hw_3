@@ -14,8 +14,6 @@ async def start_button(message: types.Message):
         first_name=message.from_user.first_name,
         last_name=message.from_user.last_name,
     )
-    message.reply(text="")
-    print(message)
     # with open(BOT_PIC, 'rb') as photo:
     #     await bot.send_photo(
     #         chat_id=message.chat.id,
@@ -28,14 +26,14 @@ async def start_button(message: types.Message):
     #     )
 
     with open(ANIMATION_PIC, 'rb') as animation:
-        await bot.send_animation(
-            chat_id=message.chat.id,
-            animation=animation,
-            caption=START_TEXT.format(
-                username=message.from_user.username
-            ),
-            parse_mode=types.ParseMode.MARKDOWN,
-            reply_markup=await start_keyboard()
+         await bot.send_animation(
+             chat_id=message.chat.id,
+             animation=animation,
+             caption=START_TEXT.format(
+                 username=message.from_user.username
+             ),
+             parse_mode=types.ParseMode.MARKDOWN,
+             reply_markup=await start_keyboard()
         )
 
 
