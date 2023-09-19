@@ -6,4 +6,4 @@ __pycache__/
 /handlers/__pycache__/
 /database/__pycache__/
 /keyboards/__pycache__/
-.users.db
+/database/users.db/
