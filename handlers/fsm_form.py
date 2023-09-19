@@ -14,7 +14,6 @@ class FormStates(StatesGroup):
     occupation = State()
     married = State()
     photo = State()
-    submit = State()
 
 
 async def fsm_start(call: types.CallbackQuery):
