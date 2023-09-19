@@ -1,7 +1,7 @@
 import sqlite3
 
 from aiogram import types, Dispatcher
-from config import bot, ADMIN_ID, BOT_PIC, ANIMATION_PIC
+from config import bot, ADMIN_ID, ANIMATION_PIC
 from const import START_TEXT
 from database.sql_commands import Database
 from keyboards.inline_buttons import start_keyboard
